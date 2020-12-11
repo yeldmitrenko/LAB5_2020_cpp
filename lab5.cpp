@@ -1,101 +1,99 @@
 #include "lab5.hh"
 
-Medicine Pharmacy::The_Cheapest()
+Medicine Pharmacy::SearchTheCheapest()
 {   
     int index = 0;
-    int min = arr[0].getPrice();
-    for(int i = 0; i < ARR; i++){
-        if(arr[i].getPrice() < min){
-            min = arr[i].getPrice();
+    int min = array_of_medicines[0].getPrice();
+    for(int i = 0; i < array_size; i++){
+        if(array_of_medicines[i].getPrice() < min){
+            min = array_of_medicines[i].getPrice();
             index = i;
         }
     }
-    return arr[index];
+    return array_of_medicines[index];
 } 
 
 
-unsigned Pharmacy::Discount()
+unsigned Pharmacy::CalculateDiscount()
 {
-    for(int i = 0; i < ARR; i++){
-        return arr[i].getPrice()-(arr[i].getPrice()*0.1);
+    for(int i = 0; i < array_size; i++){
+        return array_of_medicines[i].getPrice() - (array_of_medicines[i].getPrice() * 0.1);
     }
 }
 
 
 void Pharmacy::AddMedicine(Medicine quantity)
 {
-    Medicine *new_arr = new Medicine[ARR + 1];
+    Medicine *new_medicines_array = new Medicine[array_size + 1];
 
-    for(int i = 0; i < ARR; i++){ 
-        new_arr[i] = arr[i];
+    for(int i = 0; i < array_size; i++){ 
+        new_medicines_array[i] = array_of_medicines[i];
     } 
 
-    new_arr[ARR] = quantity;
+    new_medicines_array[array_size] = quantity;
     
-    ARR++;
+    array_size++;
+    delete[] array_of_medicines;
 
-    delete[] arr;
-
-    arr = new_arr;
+    array_of_medicines = new_medicines_array;
 }  
 
 void Pharmacy::RemoveMedicine(int index)
 {
 
-    Medicine *new_arr = new Medicine[ARR];
+    Medicine *new_medicines_array = new Medicine[array_size];
 
     for(int i = 0; i < index; i++){ 
-        new_arr[i] = arr[i]; 
+        new_medicines_array[i] = array_of_medicines[i]; 
     } 
 
-    for(int i = index+1; i < ARR; i++){
-        new_arr[i-1] = arr[i];
+    for(int i = index + 1; i < array_size; i++){
+        new_medicines_array[i - 1] = array_of_medicines[i];
     }
     
-    ARR--;
+    array_size--;
+    delete[] array_of_medicines; 
 
-    delete[] arr; 
-
-    arr = new_arr; 
+    array_of_medicines = new_medicines_array; 
 } 
 
-bool CompareDates(tm d1, tm d2)
+bool CompareDates(tm date1, tm date2)
 {
-    if (d1.tm_year > d2.tm_year)
+    if (date1.tm_year > date2.tm_year)
         return true;
-    if (d1.tm_year == d2.tm_year && d1.tm_mon > d2.tm_mon)
+    if (date1.tm_year == date2.tm_year && date1.tm_mon > date2.tm_mon)
         return true;
-    if (d1.tm_year == d2.tm_year && d1.tm_mon == d2.tm_mon && d1.tm_mday > d2.tm_mday)
+    if (date1.tm_year == date2.tm_year && date1.tm_mon == date2.tm_mon && date1.tm_mday > date2.tm_mday)
         return true;
     return false;
 }
 
-void Pharmacy::Inventory()
+void Pharmacy::MedicineInventory()
 {
     time_t epoch = time(0);
     tm* now = gmtime(&epoch);
 
-    for (int i = 0; i < ARR; i++){
-        if (CompareDates(arr[i].getDate(), *now)){
+    for (int i = 0; i < array_size; i++){
+        if (CompareDates(array_of_medicines[i].getDate(), *now)){
             RemoveMedicine(i);
         }
     }
-}
+} 
 
 
-void print(Medicine &m)
+void PrintMedicine(Medicine &medicine)
 {
-    cout << "Name: " << m.getName() << endl;
-    cout << "Price: " << m.getPrice() << endl;
-    cout << "Quantity: " << m.getQuantity() << endl;
-    cout << "Is Prescription needed: " << m.getIsPrescriptionNeeded() << endl;
+    cout << "Name: " << medicine.getName() << endl;
+    cout << "Price: " << medicine.getPrice() << endl;
+    cout << "Quantity: " << medicine.getQuantity() << endl;
+    cout << "Is Prescription needed: " << medicine.getIsPrescriptionNeeded() << endl;
 }
 
 void Pharmacy::Print()
 {
-    for (int i = 0; i < ARR; i++)
+    for (int i = 0; i < array_size; i++)
     {
-        print(arr[i]);
+        PrintMedicine(array_of_medicines[i]);
         cout << " " << endl;
     }
 }  

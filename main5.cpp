@@ -5,36 +5,36 @@ int main()
 
     Medicine ob1("No-spa", 46, 20, "no");
 
-    print(ob1);
+    PrintMedicine(ob1);
     cout << " " << endl;
 
     Medicine ob2("Spasmalgon", 35, 7, "no");
 
-    print(ob2);
+    PrintMedicine(ob2);
     cout << " " << endl;
 
     Medicine ob3("Nimid", 63, 39, "no");
 
-    print(ob3);
+    PrintMedicine(ob3);
     cout << " " << endl;
 
     Medicine ob4("Vita-melatonin", 125, 12, "yes");
 
-    print(ob4);
+    PrintMedicine(ob4);
     cout << " " << endl;
 
 
-    Pharmacy p;
+    Pharmacy pharmacy;
 
-    p.AddMedicine(ob1);
-    p.AddMedicine(ob2);
-    p.AddMedicine(ob3);
-    p.AddMedicine(ob4);
+    pharmacy.AddMedicine(ob1);
+    pharmacy.AddMedicine(ob2);
+    pharmacy.AddMedicine(ob3);
+    pharmacy.AddMedicine(ob4);
 
-    p.RemoveMedicine(1);
-    p.Print();
+    pharmacy.RemoveMedicine(1);
+    pharmacy.Print();
 
-    cout << "The cheapest: " << p.The_Cheapest().getName() << endl;
+    cout << "The cheapest: " << pharmacy.SearchTheCheapest().getName() << endl;
 
     return 0;
 

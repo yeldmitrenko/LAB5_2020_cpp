@@ -17,58 +17,60 @@ tm ExpirationDate(int day, int month, int year)
 
 class Medicine
 {
-    unsigned price;
-    string name;
-    tm date;
-    int quantity;
-    string IsPrescriptionNeeded;
+    private:
+        unsigned price;
+        string name;
+        tm date;
+        int quantity;
+        string is_prescription_needed;
 
-public:
-    Medicine(){};
-    Medicine(string name, unsigned price, int quantity, string IsPrescriptionNeeded)
-    {
-        this->name = name;
-        this->price = price;
-        this->quantity = quantity;
-        this->IsPrescriptionNeeded = IsPrescriptionNeeded;
-    };
-    ~Medicine(){};
+    public:
+        Medicine(){};
+        Medicine(string name, unsigned price, int quantity, string is_prescription_needed)
+        {
+            this->name = name;
+            this->price = price;
+            this->quantity = quantity;
+            this->is_prescription_needed = is_prescription_needed;
+        };
+        ~Medicine(){};
 
 
-    string getName() {return name;};
-    unsigned getPrice() {return price;};
-    int getQuantity() {return quantity;};
-    string getIsPrescriptionNeeded() {return IsPrescriptionNeeded;};
-    tm getDate() {return date;};
+        string getName() { return name; };
+        unsigned getPrice() { return price; };
+        int getQuantity() { return quantity; };
+        string getIsPrescriptionNeeded() { return is_prescription_needed; };
+        tm getDate() { return date; };
 
-    bool CompareDates(tm d1, tm d2);
-};
+        bool CompareDates(tm d1, tm d2);
+}; 
 
 
 class Pharmacy
 { 
-    Medicine *arr;
-    int ARR;
-public:
+    private:
+        Medicine *array_of_medicines;
+        int array_size;
+    public:
 
-    Pharmacy(int ARR){
-        this->ARR = ARR;
-        arr = new Medicine[ARR];
-    };
+        Pharmacy(int array_size){
+            this->array_size = array_size;
+            array_of_medicines = new Medicine[array_size];
+        };
 
-    Pharmacy(){
-        arr = new Medicine[ARR];
-        ARR = 0;
-    };
+        Pharmacy(){
+            array_of_medicines = new Medicine[array_size];
+            array_size = 0;
+        };
 
-    ~Pharmacy(){
-        delete[] arr;
-    };
+        ~Pharmacy(){
+            delete[] array_of_medicines;
+        };
 
-    Medicine The_Cheapest();
-    unsigned Discount();
-    void AddMedicine(Medicine quantity);
-    void RemoveMedicine(int index);
-    void Inventory();
-    void Print();
-};
+        Medicine SearchTheCheapest();
+        unsigned CalculateDiscount();
+        void AddMedicine(Medicine quantity);
+        void RemoveMedicine(int index);
+        void MedicineInventory();
+        void Print(); 
+}; 
